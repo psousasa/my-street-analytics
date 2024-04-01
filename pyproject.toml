@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "my-street-analytics"
+version = "0.1.0"
+description = "DataTalks DE Zoomcamp final project"
+authors = ["Pedro Sa <psousasa>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pandas = "^2.2.1"
+openpyxl = "^3.1.2"
+
+
+[tool.poetry.group.dev.dependencies]
+notebook = "^7.1.2"
+jupyter = "^1.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
