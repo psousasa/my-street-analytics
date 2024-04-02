@@ -11,6 +11,8 @@ variable "GCP_REGION" {
 variable "GCP_PROJECT" {
 }
 
+variable "GCP_BQ_DATASET" {
+}
 
 
 terraform {
@@ -57,3 +59,8 @@ resource "google_storage_bucket" "data-lake-bucket" {
 }
 
 
+resource "google_bigquery_dataset" "dataset" {
+  dataset_id = var.GCP_BQ_DATASET
+  project    = var.GCP_PROJECT
+  location   = var.GCP_REGION
+}
