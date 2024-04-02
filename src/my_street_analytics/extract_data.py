@@ -3,6 +3,8 @@ import json
 import urllib.request
 import os
 from google.cloud import storage
+from google.cloud import bigquery
+import pandas as pd
 
 
 def load_data(data_root):
@@ -48,9 +50,24 @@ def web_file_to_gcp_bucket(
     bucket = storage_client.get_bucket(bucket_name)
 
     for year, url in data_source.items():
-        response = requests.get(url, stream=True)
+        df = pd.read_excel(url)
+        bucket.blob(f"{file_root_destination}/{year}.csv").upload_from_string(
+            df.to_csv(index=False), "text/csv"
+        )
 
-        destination_blob_name = f"{file_root_destination}/{year}.xlsx"
 
-        blob = bucket.blob(destination_blob_name)
-        blob.upload_from_file(response.raw)
+def bq_external_table(
+    project_id: str, bucket_name: str, files_root: str, dataset: str, table_name: str
+) -> bigquery.table._EmptyRowIterator:
+
+    client = bigquery.Client(project=project_id)
+    sql = f"""
+            CREATE OR REPLACE EXTERNAL TABLE `{dataset}.{table_name}`
+            OPTIONS (
+                format = 'CSV',
+                uris = ['gs://{bucket_name}/{files_root}/*.csv'])
+                """
+
+    query_job = client.query(sql)
+
+    return query_job.result()
