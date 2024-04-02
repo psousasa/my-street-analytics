@@ -1,20 +1,18 @@
-with source as (
-    select * from {{source('staging', 'external_street_events')}}
-),
+with
+    source as (select * from {{ source("staging", "external_street_events") }}),
 
-renamed as (
-    select
-        dt_registo as event_date,	
-        area as event_category, 
-        tipo as event_type,
-        Freguesia as municipal_parish,
-        Subseccao as municipal_subsection,
-        Longitude_Subseccao as lon_subsection,
-        Latitude_Subseccao as lat_subsection
-    
-    from source
-)
+    renamed as (
+        select
+            dt_registo as event_date,
+            area as event_category,
+            tipo as event_type,
+            freguesia as municipal_parish,
+            subseccao as municipal_subsection,
+            longitude_subseccao as lon_subsection,
+            latitude_subseccao as lat_subsection
 
-select * from renamed
+        from source
+    )
 
-
+select *
+from renamed
