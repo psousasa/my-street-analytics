@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: staging
-    database: "hybrid-saga-412112"
+    database: hybrid-saga-412112
     schema: my_street_analytics
     tables:
-      - name: street_events
+      - name: external_street_events
