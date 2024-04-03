@@ -5,6 +5,7 @@ import os
 from google.cloud import storage
 from google.cloud import bigquery
 import pandas as pd
+from dotenv import load_dotenv, find_dotenv
 
 
 def load_data(data_root):
@@ -34,8 +35,6 @@ def stream_data(data_root):
 def create_gcp_client(credentials_path: str) -> storage.Client:
     # Initialize the storage client
     return storage.Client.from_service_account_json(credentials_path)
-
-import json
 
 
 def web_file_to_gcp_bucket(
@@ -71,3 +70,25 @@ def bq_external_table(
     query_job = client.query(sql)
 
     return query_job.result()
+
+
+if __name__ == '__main__':
+
+    load_dotenv(find_dotenv("dev.env"))
+
+    credentials_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+    bucket_name = os.getenv("TF_VAR_GCP_BUCKET")
+    file_root_destination = os.getenv("GCS_BUCKET_ROOT")
+    local_data_root = os.getenv("SOURCE_WEB_FILES")
+    project_id = os.getenv("TF_VAR_GCP_PROJECT")
+    dataset = os.getenv("TF_VAR_GCP_BQ_DATASET")
+    table_name = os.getenv("GCP_EXTERNAL_TABLE")
+
+
+    storage_client = create_gcp_client(
+        credentials_path=credentials_path
+    )
+
+    web_file_to_gcp_bucket(bucket_name=bucket_name, storage_client=storage_client, file_root_destination=file_root_destination, local_data_root=local_data_root)
+
+    bq_external_table(project_id=project_id, bucket_name=bucket_name, files_root=file_root_destination, dataset=dataset, table_name=table_name)
