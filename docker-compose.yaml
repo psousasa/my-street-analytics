@@ -1,22 +1,26 @@
 services:
-  # pyextract:
-  #   build:
-  #     context: ./
-  #     dockerfile: docker/py.Dockerfile
-  #   volumes:
-  #     - "${GOOGLE_APPLICATION_CREDENTIALS}:/keys/gcp_key.json"
-  #   environment:
-  #     - GOOGLE_APPLICATION_CREDENTIALS=/keys/gcp_key.json
-  #   networks:
-  #     - default
+  pyextract:
+    build:
+      context: ./
+      dockerfile: docker/py.Dockerfile
+    volumes:
+      - "${GOOGLE_APPLICATION_CREDENTIALS}:/keys/gcp_key.json"
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/keys/gcp_key.json
+    networks:
+      - default
 
   dbt:
     image: ghcr.io/dbt-labs/dbt-bigquery:1.4.1
     volumes:
       - "./dbt:/usr/app"
+      - "./profiles.yml:/root/.dbt/profiles.yml"
       - "${GOOGLE_APPLICATION_CREDENTIALS}:/keys/gcp_key.json"
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/keys/gcp_key.json
+      - GCP_PROJECT=${TF_VAR_GCP_PROJECT}
+      - GCP_BQ_DATASET=${TF_VAR_GCP_BQ_DATASET}
+      - GCP_REGION=${TF_VAR_GCP_REGION}
     networks:
       - default
 
