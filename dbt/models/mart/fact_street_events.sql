@@ -1,8 +1,12 @@
 -- Normally, this would be an insert/update table, with stg only containing the latest ETL data
 {{
-    config(
-        materialized='table'
-    )
+     config(
+    materialized = "table",
+    cluster_by=['event_date'],
+    partition_by = {
+      "field": "event_type_id",
+      "data_type": "integer"
+    }  )
 }}
 
 select  ROW_NUMBER() OVER (Partition by 1 order by stg.event_date) as id, 
