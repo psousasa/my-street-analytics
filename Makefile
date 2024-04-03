@@ -16,16 +16,13 @@ start:
 stop:
 	@echo "# REMOVING CONTAINER IMAGE..."
 	docker compose down
+# only with terraform version >2.0
+# @echo "# DESTROING INFRASTRUCTURE WITH TERRAFORM..."
+# terraform && terraform destroy && cd ..
 
 extract:
 	@echo "# EXTRACTING DATA FROM SOURCE..."
 	docker compose run pyextract
 
-
-# only with terraform version >2.0
-# @echo "# DESTROING INFRASTRUCTURE WITH TERRAFORM..."
-# terraform && terraform destroy && cd ..
-
-
-# transform:
-# 	docker compose run dbt run
+transform:
+	docker compose run dbt run
