@@ -1,0 +1,61 @@
+version: 2
+
+sources:
+  - name: dim
+    database: hybrid-saga-412112
+    schema: my_street_analytics
+
+models:
+  - name: dim_parish
+    description: "Dimension table for Municpal Parishes"
+    columns:
+      - name: id
+        data_type: int64
+        description: "primary key"
+
+      - name: municipal_parish
+        data_type: string
+
+  - name: dim_parish_subsection
+    description: "Dimension table for Municipal Parishes Subsection"
+    columns:
+      - name: id
+        data_type: int64
+        description: "primary key - same as the subsection code"
+
+      - name: municipal_parish_id
+        data_type: string    
+        description: "Foreign key against dim_parish"
+      
+      - name: longitude
+        data_type: float64    
+
+      - name: latitude
+        data_type: float64    
+
+  - name: dim_event_category
+    description: "Dimension table for Event Categories"
+    columns:
+      - name: id
+        data_type: int64
+        description: "primary key"
+
+      - name: event_category
+        data_type: string       
+
+  - name: dim_event_type
+    description: "Dimension table for Event Types"
+    columns:
+      - name: id
+        data_type: int64
+        description: "primary key"
+
+      - name: event_type
+        data_type: string
+
+      - name: event_category_id
+        data_type: string
+        description: "foreign key against dim_event_category" 
+
+
+
