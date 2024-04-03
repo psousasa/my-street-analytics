@@ -85,10 +85,10 @@ _**Note on src:** This folder structure was chosen with a fully fledged Python M
 - Source environment variables:
     1. Create copy of sample.env named dev.env in same directory.
     2. Fill in variables.
-    3. Source the dev.env file. Note that you should use this terminal window to run the pipeline:
+    3. Source the dev.env file. Note that you should use the same terminal window to run the pipeline:
 
 ```
-$ source dev.env"
+$ source dev.env
 ```
 
 ### Pipeline execution
@@ -110,10 +110,6 @@ You can access the dashboard [here](https://lookerstudio.google.com/reporting/71
 
 ![dashboard](data/images/looker_report.png)
 
-## FAQ
-
-- Error when making Prefect blocks: `httpx.ConnectError: All connection attempts failed`?
-	- Try `make stop && make start`, and check if you can run the code inside a bash shell: `docker compose run cli /bin/bash` (`python blocks/make_blocks.py`).
 
 ## Next steps
 
