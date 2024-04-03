@@ -1,7 +1,7 @@
 version: 2
 
 sources:
-  - name: dim
+  - name: mart
     database: hybrid-saga-412112
     schema: my_street_analytics
 
@@ -57,5 +57,20 @@ models:
         data_type: string
         description: "foreign key against dim_event_category" 
 
+  - name: fact_street_events
+    description: ""
+    columns:
+      - name: id
+        data_type: int64
+        description: "street event primary key"
 
+      - name: event_date
+        data_type: date
 
+      - name: event_type_id
+        data_type: int64
+        description: "foreign key against dim_event_type" 
+
+      - name: municipal_subsection_code
+        data_type: int64
+        description: "foreign key against dim_parish_subsection"
