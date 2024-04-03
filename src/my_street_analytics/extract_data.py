@@ -8,30 +8,6 @@ import pandas as pd
 from dotenv import load_dotenv, find_dotenv
 
 
-def load_data(data_root):
-    with open(f"{data_root}/source.json", "r") as f:
-        data_source = json.loads(f.read())
-
-    [
-        urllib.request.urlretrieve(
-            data_source[year], os.path.join(data_root, f"{year}.xlsx")
-        )
-        for year in data_source
-    ]
-
-def stream_data(data_root):
-    with open(f"{data_root}/source.json", "r") as f:
-        data_source = json.loads(f.read())
-
-    for year in data_source:
-        with requests.get(data_source[year], stream=True) as r:
-            r.raise_for_status()
-
-            with open(os.path.join(data_root, f"{year}.xlsx"), "wb") as f:
-                for chunk in r.iter_content(chunk_size=8192):
-                    f.write(chunk)
-
-
 def create_gcp_client(credentials_path: str) -> storage.Client:
     # Initialize the storage client
     return storage.Client.from_service_account_json(credentials_path)
@@ -48,10 +24,11 @@ def web_file_to_gcp_bucket(
 
     bucket = storage_client.get_bucket(bucket_name)
 
+    cols = ["dt_registo", "area", "tipo", "Subseccao", "Freguesia", "Longitude_Subseccao", "Latitude_Subseccao"]
     for year, url in data_source.items():
         df = pd.read_excel(url)
         bucket.blob(f"{file_root_destination}/{year}.csv").upload_from_string(
-            df.to_csv(index=False), "text/csv"
+            df[cols].to_csv(index=False), "text/csv"
         )
 
 
