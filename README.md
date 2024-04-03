@@ -38,6 +38,10 @@ Since it is a Government app, its data is governed by EU directives and (at leas
     - Create views and Reports.
 
 
+### Data Model
+### Staging
+
+
 **Partitioning**
 
 - By Category, since it would allows to filter out and target specific ones.
@@ -94,6 +98,8 @@ $ source dev.env"
 Using Google Data Studio, a dashboard showing node types and number of comments and blogs in a timeline.
 
 You can access the dashboard [here](https://lookerstudio.google.com/reporting/7146e196-3ce8-4b3c-9bc6-70eef2ae1ad1).
+
+![dashboard](dw_dll.png)
 
 ## FAQ
 
