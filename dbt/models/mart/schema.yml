@@ -5,6 +5,7 @@ sources:
     database: hybrid-saga-412112
     schema: my_street_analytics
 
+
 models:
   - name: dim_parish
     description: "Dimension table for Municpal Parishes"
@@ -74,3 +75,24 @@ models:
       - name: municipal_subsection_code
         data_type: int64
         description: "foreign key against dim_parish_subsection"
+  
+  - name: view_street_events
+    description: ""
+    columns:
+      - name: event_date
+        data_type: date
+
+      - name: event_category
+        data_type: string        
+
+      - name: event_type
+        data_type: string
+
+      - name: municipal_parish
+        data_type: string
+
+      - name: longitude
+        data_type: float64
+      
+      - name: latitude
+        data_type: float64        
