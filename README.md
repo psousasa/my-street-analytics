@@ -39,7 +39,16 @@ Since it is a Government app, its data is governed by EU directives and (at leas
 
 
 ### Data Model
-### Staging
+![dll](data/images/dw_dll.png)
+- External table built from GCS Bucket CSV files.
+- Staging table with all records.
+- Dim tables:
+    - Event category: major event classification.
+    - Event Type: a type within the event category.
+    - Parish: municpal parish.
+    - Parish Subsection: a more exact location within the Municipal Parish.
+- Fact with all records, mostly denormalised.
+- View built from the fact
 
 
 **Partitioning**
@@ -48,7 +57,7 @@ Since it is a Government app, its data is governed by EU directives and (at leas
 
 **Clustering**
 
-- By date would be the most useful since we are not filtering on it and might want to plot timeseries.
+- By date would be the most useful since we are not filtering on it, but might want to plot timeseries.
 
 _**Note on Clustering and Partitioning:** Being a small dataset, these were implemented to meet evaluation metrics._
 
@@ -99,7 +108,7 @@ Using Google Data Studio, a dashboard showing node types and number of comments 
 
 You can access the dashboard [here](https://lookerstudio.google.com/reporting/7146e196-3ce8-4b3c-9bc6-70eef2ae1ad1).
 
-![dashboard](dw_dll.png)
+![dashboard](data/images/looker_report.png)
 
 ## FAQ
 
