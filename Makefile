@@ -6,19 +6,21 @@ setup:
 	cd terraform && terraform init && terraform apply && cd ..
 
 	@echo "# BUILDING CONTAINERS..."
-	docker build -f Dockerfile -t mystreetanalytics:latest .   
+	docker compose build
 
 
-extract:
-	@echo "# CREATING AND RUNNING CONTAINER..."
-	docker run \
-		-v $$GOOGLE_APPLICATION_CREDENTIALS:"/keys/gcp_key.json":ro \
-		-e GOOGLE_APPLICATION_CREDENTIALS="/keys/gcp_key.json" \
-		mystreetanalytics:latest
+start:
+	@echo "# CREATING AND STARTING CONTAINERS..."
+	docker compose up -d
 
 stop:
 	@echo "# REMOVING CONTAINER IMAGE..."
-	docker rmi -vf mystreetanalytics:latest
+	docker compose down
+
+extract:
+	@echo "# EXTRACTING DATA FROM SOURCE..."
+	docker compose run pyextract
+
 
 # only with terraform version >2.0
 # @echo "# DESTROING INFRASTRUCTURE WITH TERRAFORM..."
