@@ -3,3 +3,14 @@
 target/
 dbt_packages/
 logs/
+data/*.xlsx
+*.ipynb
+dev.env
+hybrid-saga-412112-990e2f2af52a.json
+src/my_street_analytics/__pycache__/__init__.cpython-310.pyc
+terraform/.terraform.lock.hcl
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/.terraform/providers/registry.terraform.io/hashicorp/google/4.51.0/linux_amd64/terraform-provider-google_v4.51.0_x5
+.gitignore
+terraform/terraform.tfstate
